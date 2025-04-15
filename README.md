@@ -1,3 +1,3 @@
 # Tutorial on MACE Field
 
-[MACE field tutorial](https://colab.research.google.com/drive/1UXu43k1DB9vU-qXarRIgwdCb0V91fvm2#scrollTo=tzwwemRNslCz)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/MACE_Field_Tutorial.ipynb)
