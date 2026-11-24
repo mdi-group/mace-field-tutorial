@@ -1,35 +1,22 @@
 # MACEField course
 
-Every notebook is a standalone lesson. Open any one in Colab, or run it from this repository locally. Each setup cell installs MACE-Field from the package's `main` branch. Local users can set `MACEFIELD_REPO` to a checkout on `main`; otherwise the setup uses a sibling main checkout or clones the package into a temporary directory.
+Each lesson is independent and can be opened in Colab or run from a local clone. Setup installs MACE-Field from the package `main` branch. The material notebooks include their required input data and specialist checkpoint; the foundation lesson downloads its pinned assets from the official 1.1.0 release.
 
-## BaTiO₃
+1. [MACEField architecture and response derivatives](00_macefield_architecture.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/00_macefield_architecture.ipynb)
+2. [BaTiO₃ training, polarization, BECs, and field MD](01_batio3_workflow.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/01_batio3_workflow.ipynb)
+3. [SiO₂ training, dielectric response, Hessian, and 300 K spectra](02_sio2_workflow.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/02_sio2_workflow.ipynb)
+4. [Use and fine-tune MACEField-MH-1](03_foundation_finetuning.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/03_foundation_finetuning.ipynb)
 
-1. [Train MACEField on BaTiO₃](01_train_batio3.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/01_train_batio3.ipynb)
-2. [Ti displacement, polarization, and BECs](02_batio3_single_point.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/02_batio3_single_point.ipynb)
-3. [Finite-field MD and hysteresis-style loops](03_batio3_finite_field_md.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/03_batio3_finite_field_md.ipynb)
+## BaTiO₃ data and limitations
 
-The fast five-atom teaching set is generated from an analytic fixed-cell Landau surface. Its labels are not DFT or experiment. BECs in the single-point lesson are model derivatives without BEC supervision, and the MD loop is illustrative rather than a validated material prediction.
+The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. The bundled checkpoint supports the Ti-displacement and short alternating-field MD examples. The available zero-field response labels and short trajectories do not establish hysteresis or switching accuracy.
 
-The foundation fine-tuning lesson uses a different, bundled 48/11 split of 135-atom BaTiO₃ response structures. All frames have the same small positive field tag; this split does not validate field reversal or switching.
+## α-quartz SiO₂ data and limitations
 
-## α-quartz SiO₂
+The combined SiO₂ notebook trains on a deterministic 24/8 subset of the 201-frame, 72-atom QE response dataset. Configurations came from classical MD at 300 K and 600 K, not AIMD. Later dielectric and Hessian calculations use the bundled specialist checkpoint and full response data. The spectroscopy section runs fixed-cell, zero-field Langevin MD at 300 K; its default trajectory is short, so the spectra are exploratory and need convergence checks. Hessians are calculated from the model rather than read as dataset labels.
 
-4. [Train on the SiO₂ response dataset](04_train_sio2.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/04_train_sio2.ipynb)
-5. [Single-point dielectric response, BECs, Hessian, and ionic dielectric](05_sio2_dielectric_hessian.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/05_sio2_dielectric_hessian.ipynb)
-6. [Zero-field MD and frequency-dependent spectra](06_sio2_md_spectroscopy.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/06_sio2_md_spectroscopy.ipynb)
+## Foundation model
 
-The 201-frame, 72-atom SiO₂ file has zero-field energy, force, stress, polarization, BEC, and electronic-susceptibility labels. The Hessian is calculated from the bundled model because it is not a stored dataset label. The MD lesson derives exploratory frequency-dependent dielectric, IR, and Raman curves from polarization and susceptibility autocorrelations. Increase trajectory length and check convergence before interpreting spectra quantitatively.
+The MH-1 lesson loads the released MACEField foundation model (MACEField-MH-1) and its replay set from release 1.1.0. Inference is the default; fine-tuning is opt-in because it requires additional download, GPU time, and memory.
 
-## MACEField foundation model
-
-7. [Run the released foundation model and fine-tune a BTO head](07_foundation_finetuning.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/07_foundation_finetuning.ipynb)
-
-The notebook downloads and checksum-verifies the official release checkpoint and replay data. Foundation inference runs by default. The multi-head fine-tuning step is opt-in and uses a new `ft_head`, replay pseudolabels, and inherited foundation energy shifts.
-
-## Optional reference lessons
-
-- [Architecture and response derivatives](00_macefield_architecture.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/00_macefield_architecture.ipynb)
-- [Dataset catalog](08_response_dataset_catalog.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/08_response_dataset_catalog.ipynb)
-- [Standalone training shell script for the 135-atom BTO reference split](scripts/train_macefield.sh)
-
-See [data provenance and checksums](data/README.md) before interpreting these outputs.
+The subset builder is available at [`scripts/build_training_subsets.py`](scripts/build_training_subsets.py). It records source indices and file checksums in [`training_subsets.json`](data/training_subsets.json). See [data provenance and checksums](data/README.md) and the [figure attribution](../figures/ATTRIBUTION.md).

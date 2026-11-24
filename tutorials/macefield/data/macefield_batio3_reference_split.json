@@ -1,10 +1,8 @@
 {
-  "dataset": "BaTiO3 reference-calculation set for MACEField tutorial",
-  "source_file": "MACEField_dev/BaTiO3/BaTiO3-preprocessed.xyz",
-  "source_absolute_path_at_copy": "/home/brad/repositories/MACEField_dev/BaTiO3/BaTiO3-preprocessed.xyz",
-  "source_sha256": "d4eca5615550ef65570341f66c8313a6253b56727f74ae1d3d21ba7fbd693150",
-  "source_processing_notebook": "MACEField_dev/BaTiO3/process-BaTiO3-data.ipynb",
-  "source_split_file": "MACEField_dev/BaTiO3/valid_indices_23.txt",
+  "dataset": "BaTiO3 zero-field QE response reference set for MACEField tutorials",
+  "source_file": "2025-04-mace-field/scripts/BaTiO3/BaTiO3-preprocessed.xyz",
+  "source_sha256": "ed51b4577ad6579e129f9e23f7f0d13c42f40ae7ae9a988a8f2f8a425eb7b9c0",
+  "source_processing_notebook": "2025-04-mace-field/scripts/BaTiO3/process-BaTiO3-data.ipynb",
   "frames": 59,
   "atoms_per_frame": 135,
   "train_frames": 48,
@@ -86,17 +84,20 @@
   ],
   "electric_field_support_V_per_A": [
     [
-      0.0036,
-      0.0036,
-      0.0036
+      0.0,
+      0.0,
+      0.0
     ]
   ],
-  "label_provenance_note": "The source preprocessing notebook copies results from stored ASE calculator objects. The local data and notebook do not retain the electronic-structure code or functional, so none is asserted here.",
-  "coverage_note": "All frames have the same small positive [111] field tag; this split does not validate field reversal, wide-field extrapolation, or hysteresis.",
+  "label_provenance_note": "Energy, forces, stress, and polarization are from zero-field Quantum ESPRESSO calculations. BECs are obtained from finite differences of forces with respect to small applied fields; polarizability is obtained from finite differences of polarization with respect to field, on the same fixed geometries. The processed field tag is zero and matches the zero-field mechanical labels.",
+  "coverage_note": "All labels are at the zero-field geometry; there are no reference labels for field reversal, switching paths, or wide-field extrapolation.",
   "copied_files": {
-    "macefield_batio3_reference.extxyz": "d4eca5615550ef65570341f66c8313a6253b56727f74ae1d3d21ba7fbd693150",
-    "macefield_batio3_reference_train.extxyz": "2989c9ee356b94b12b1fbed9804346eaa5aa44710d13c57eb7ab17d710d0b34c",
-    "macefield_batio3_reference_valid.extxyz": "cf7d8e0054618680a00d55672fd849ad24cb20bf3e260c4ffcc318373f0f2252",
-    "macefield_batio3_reference_valid_indices_23.txt": "18a5954d8d420c1fc54cb5317644b54b444ca2e4fc7de1951e85dc6484aeb537"
-  }
+    "macefield_batio3_reference.extxyz": "ed51b4577ad6579e129f9e23f7f0d13c42f40ae7ae9a988a8f2f8a425eb7b9c0",
+    "macefield_batio3_reference_train.extxyz": "bf087d186722a59bcb2ff4ac81f7216cd724f6b72bc0fbb2190d44294124e470",
+    "macefield_batio3_reference_valid.extxyz": "94b47f44df434fdf6eb066dab5da37df027655df7ef0e083d71e460df23fbe40"
+  },
+  "configuration_provenance_note": "The source workflow documents BTO configurations as Flare active-learning structures, not AIMD. They are genuine QE-labeled response structures, but are not described as AIMD.",
+  "source_repository": "https://github.com/mdi-group/2025-04-mace-field",
+  "source_response_parser": "https://github.com/mir-group/allegro-pol/blob/main/scripts/2.ParseQE/parse_QE.py",
+  "source_configuration_notes": "https://github.com/mir-group/allegro-pol/blob/main/scripts/1.CalculatorQE/README.md"
 }

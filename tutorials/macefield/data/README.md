@@ -1,34 +1,40 @@
-# Tutorial data and checkpoints
+# Tutorial data and provenance
 
-The notebook sequence carries the inputs it needs. Generated models and trajectories are written under `tutorials/macefield/runs/`, which is ignored by Git.
+The training lessons use small, reproducible subsets of the bundled QE response datasets. Every subset keeps the source energy, force, stress, polarization, BEC, and polarizability labels. The source structures are not AIMD trajectories: BTO configurations came from Flare active learning, and quartz configurations came from classical MD. The [source workflow notes](https://github.com/mir-group/allegro-pol/blob/main/scripts/1.CalculatorQE/README.md) document these origins. Quantum ESPRESSO calculations provide the electronic labels through the [QE response parser](https://github.com/mir-group/allegro-pol/blob/main/scripts/2.ParseQE/parse_QE.py).
 
-## BaTiO₃ analytic teaching set
+## BaTiO₃ QE response data
 
-The five-atom train/validation files and `MACEField-Landau.model` are copied from the MACEField section of [Neutrino155/MACE_tutorials](https://github.com/Neutrino155/MACE_tutorials/tree/main/MACE_extensions). They contain 345 training and 132 validation structures spanning Ti displacements and positive and negative z-directed fields. Energy, force, and polarization labels come from a fixed-cell analytic Landau model. There are no BEC labels; BECs in the single-point lesson are model-derived.
+`macefield_batio3_reference.extxyz` contains 59 periodic structures with 135 atoms each. Energy, forces, stress, and polarization are from zero-field calculations. BECs come from the change in force under a small applied field, and polarizability comes from the change in polarization under that field, all on the same fixed geometries. The field tag is therefore zero. The earlier copy tagged these zero-field labels with a nonzero field and has been replaced by the coherent zero-field version.
+
+The full file is split into 48 training and 11 validation frames for the foundation fine-tuning lesson. The combined BaTiO₃ notebook uses a smaller 12/4 subset selected evenly within those fixed splits. There is no independent test split. The BTO tutorial subset does not cover field reversal, switching paths, or a wide-field range, and it is not an AIMD dataset.
+
+## α-quartz SiO₂ QE response data
+
+`sio2/SiO2-preprocessed.extxyz` contains 201 periodic, 72-atom structures with zero-field energy, forces, stress, and polarization labels plus BEC and electronic-susceptibility derivatives computed from small finite-field QE calculations on the same fixed geometries. It combines configurations from classical MD trajectories at 300 K and 600 K, followed by QE response calculations; it is not AIMD. Hessians are not stored labels and are calculated from the bundled model in the combined SiO₂ notebook.
+
+The combined SiO₂ notebook uses 24 training and 8 validation frames. Both temperatures occur in both splits. Validation frames are selected from later blocks of each source trajectory to reduce adjacent-frame leakage. The later dielectric, Hessian, and spectroscopy sections use the full data file and bundled specialist checkpoint; they do not depend on a model produced by the compact training demonstration.
+
+## Reproducing the training subsets
+
+Run `python tutorials/macefield/scripts/build_training_subsets.py` from the repository root. The script uses the fixed source split and source-frame blocks documented in [training_subsets.json](training_subsets.json). It preserves the original labels and writes the four small ExtXYZ files listed there. SHA-256 values and exact source indices are recorded in the same manifest.
+
+## Checksums
 
 | File | SHA-256 |
 | --- | --- |
-| `batio3/macefield_batio3_toy_train.extxyz` | `2f63e0a24e393c1d3de770bc079780eed1ac9c65a3c258c318c2a041231c70c8` |
-| `batio3/macefield_batio3_toy_valid.extxyz` | `4d1a968074cccf1d352ba30d131d1343624f95c43d60111ef8d36de0373c10b2` |
-| `batio3/MACEField-Landau.model` | `7c9277863364a0662ce99e84dc15a04104f341438b4260e8a0ad85758fb65fd7` |
-
-## BaTiO₃ reference response split
-
-The 59-frame reference file and 48/11 train/validation split are described in [macefield_batio3_reference_split.json](macefield_batio3_reference_split.json). Frames contain 135 atoms and energy, forces, stress, polarization, BEC, and polarizability labels with one shared field vector, `[0.0036, 0.0036, 0.0036] V/Å`. The source files do not identify the electronic-structure code or functional, and there is no independent test split. This dataset is used only as the target data in the foundation fine-tuning example.
-
-## α-quartz SiO₂ response set
-
-The preprocessed zero-field dataset and specialist checkpoint are copied from the α-quartz workflow in [mdi-group/2025-04-mace-field](https://github.com/mdi-group/2025-04-mace-field/tree/main/scripts/SiO2). The file has 201 frames of 72-atom α-quartz structures. It stores energy, forces, stress, polarization, BEC, and volume-normalized electronic susceptibility. It does not contain Hessian labels.
-
-| File | SHA-256 |
-| --- | --- |
+| `macefield_batio3_reference.extxyz` | `ed51b4577ad6579e129f9e23f7f0d13c42f40ae7ae9a988a8f2f8a425eb7b9c0` |
+| `macefield_batio3_reference_train.extxyz` | `bf087d186722a59bcb2ff4ac81f7216cd724f6b72bc0fbb2190d44294124e470` |
+| `macefield_batio3_reference_valid.extxyz` | `94b47f44df434fdf6eb066dab5da37df027655df7ef0e083d71e460df23fbe40` |
+| `batio3/batio3_qe_train_sample.extxyz` | `254b0e2123025c27e2dc94925563221aae12a983e9a92e99de6f234f0d8003f6` |
+| `batio3/batio3_qe_valid_sample.extxyz` | `3a3deb0f01b7ec692ff9f07f43d1617addae077125a64dd2ef9e3056042a1dc4` |
+| `batio3/MACE-Field-BaTiO3.model` | `b056334519f583e58120bbf86807e0dea824fd80f32025b89571d626ec124793` |
 | `sio2/SiO2-preprocessed.extxyz` | `170f4ce4ab165410f835a8c9b88447f4150ceb2974922a4baf32fd4d61bf8886` |
+| `sio2/quartz_qe_train_sample.extxyz` | `22d9466afc851f2d0aea1c9d14b8aad84e96efc82f80e292543da92bf4337ff0` |
+| `sio2/quartz_qe_valid_sample.extxyz` | `8937339634a40cfdb306ccad1a5a2b89f9d775a0fc1a1dc59ba1190364d8e9a9` |
 | `sio2/MACE-field-SiO2.model` | `d86405849cda7c892bbeeb6fc6161d219639fc0d51637604ee103b6a8e4623f8` |
+
+The 48/11 BTO split and its label provenance are documented in [macefield_batio3_reference_split.json](macefield_batio3_reference_split.json). The architecture illustration attribution is in [ATTRIBUTION.md](../../figures/ATTRIBUTION.md).
 
 ## Foundation assets
 
-The foundation lesson downloads the official [MACE-Field 1.0.2 release](https://github.com/mdi-group/mace-field/releases/tag/1.0.2) into the ignored `runs/foundation_assets/` directory and checks both files against pinned SHA-256 values before use. The model and replay dataset are therefore independent inputs to that notebook and are not copied into this tutorial repository.
-
-## Figure
-
-The architecture illustration attribution is recorded in [ATTRIBUTION.md](../../figures/ATTRIBUTION.md).
+The foundation lesson downloads the official [MACE-Field 1.1.0 release](https://github.com/mdi-group/mace-field/releases/tag/1.1.0) and checks both files against pinned SHA-256 values before use. It places `MACEField-MH-1.model` (SHA-256 `3e654f1cd043df8df68002f7d7eec626b3e9dce7763dedbbf3710188bff048d0`) and `MACEField-MH-1-replay-set.extxyz` (SHA-256 `ecd678fff40a7e31033197bef52d39e9a2f52603532e2f5ae4e871aa368a1166`) into the ignored `runs/foundation_assets/` directory; these large release assets are not copied into this repository.
