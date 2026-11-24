@@ -7,6 +7,8 @@ Each lesson is independent and can be opened in Colab or run from a local clone.
 3. [SiO₂ training, dielectric response, Hessian, and 300 K spectra](02_sio2_workflow.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/02_sio2_workflow.ipynb)
 4. [Use and fine-tune MACEField-MH-1](03_foundation_finetuning.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/03_foundation_finetuning.ipynb)
 
+Training cells stream per-epoch validation loss and available RMSEs; MD cells print each step and save a trajectory that is visualized in the notebook. Only `DeprecationWarning` and `FutureWarning` are filtered in the notebooks and their Python training subprocesses.
+
 ## BaTiO₃ data and limitations
 
 The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. The bundled checkpoint supports the Ti-displacement and short alternating-field MD examples. The available zero-field response labels and short trajectories do not establish hysteresis or switching accuracy.
