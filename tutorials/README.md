@@ -1,6 +1,6 @@
 # MACEField tutorial index
 
-These notebooks use the MACE-Field package from the `clean` branch. In Colab, each setup cell clones the package and this tutorial repository; locally, clone them side by side or set `MACEFIELD_REPO` to the package checkout.
+These notebooks use the MACE-Field package from the `main` branch. In Colab, each setup cell clones the package and this tutorial repository; locally, clone them side by side or set `MACEFIELD_REPO` to the package checkout.
 
 1. [MACE-Field introduction](../MACE_Field_Tutorial.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/MACE_Field_Tutorial.ipynb)
 2. [Architecture and response derivatives](macefield/01_macefield_architecture.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/01_macefield_architecture.ipynb)

@@ -1,6 +1,6 @@
 # MACEField course
 
-Open these MACEField notebooks in Colab or run locally from the tutorial checkout with a sibling MACE-Field package checkout. In Colab the setup cell clones the package's `clean` branch and this repository's `main` branch, then installs MACE-Field in editable mode.
+Open these MACEField notebooks in Colab or run locally from the tutorial checkout with a sibling MACE-Field package checkout. In Colab the setup cell clones the package's `main` branch and this repository's `main` branch, then installs MACE-Field in editable mode.
 
 1. [Architecture and response derivatives](01_macefield_architecture.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/01_macefield_architecture.ipynb)
 2. [Train on BaTiO₃ reference data](02_train_macefield_batio3.ipynb) — [Open in Colab](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/02_train_macefield_batio3.ipynb)

@@ -1,6 +1,6 @@
 # MACE-Field tutorials
 
-This repository contains MACEField notebooks, response datasets, scripts, and Colab launchers. The notebooks install the MACE-Field package from its [`clean` branch](https://github.com/mdi-group/mace-field/tree/clean).
+This repository contains MACEField notebooks, response datasets, scripts, and Colab launchers. The notebooks install the MACE-Field package from its [`main` branch](https://github.com/mdi-group/mace-field/tree/main).
 
 ## Start here
 
