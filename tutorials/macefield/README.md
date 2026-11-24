@@ -11,11 +11,11 @@ Training cells stream per-epoch validation loss and available RMSEs; MD cells pr
 
 ## BaTiO₃ data and limitations
 
-The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. The bundled checkpoint supports the Ti-displacement and short alternating-field MD examples. The available zero-field response labels and short trajectories do not establish hysteresis or switching accuracy.
+The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. The bundled checkpoint supports the Ti-displacement example and an alternating-field MD sweep to ±0.36 V/Å. That range is 100 times the largest bundled response-label field (±0.0036 V/Å), so the P–E loop is an extrapolation stress test, not validated hysteresis or switching behavior.
 
 ## α-quartz SiO₂ data and limitations
 
-The combined SiO₂ notebook trains on a deterministic 24/8 subset of the 201-frame, 72-atom QE response dataset. Configurations came from classical MD at 300 K and 600 K, not AIMD. Later dielectric and Hessian calculations use the bundled specialist checkpoint and full response data. The spectroscopy section runs fixed-cell, zero-field Langevin MD at 300 K; its default trajectory is short, so the spectra are exploratory and need convergence checks. Hessians are calculated from the model rather than read as dataset labels.
+The combined SiO₂ notebook trains on a deterministic 24/8 subset of the 201-frame, 72-atom QE response dataset. Configurations came from classical MD at 300 K and 600 K, not AIMD. Later dielectric and Hessian calculations use the bundled specialist checkpoint and full response data. The spectroscopy section runs fixed-cell, zero-field Langevin MD at 300 K; the default trajectory is 1 ps on GPU or 0.25 ps on CPU, so the spectra are exploratory and need convergence checks. Hessians are calculated from the model rather than read as dataset labels.
 
 ## Foundation model
 
