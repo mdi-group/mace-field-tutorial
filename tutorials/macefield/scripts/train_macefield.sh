@@ -2,13 +2,25 @@
 set -euo pipefail
 
 TUTORIAL_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
-MACEFIELD_REPO="${MACEFIELD_REPO:-$TUTORIAL_ROOT/../mace-field}"
+if [[ -z "${MACEFIELD_REPO:-}" ]]; then
+  for candidate in "$TUTORIAL_ROOT/../mace-field-main" "$TUTORIAL_ROOT/../mace-field"; do
+    if [[ -f "$candidate/mace/modules/extensions.py" ]] &&
+       [[ "$(git -C "$candidate" branch --show-current 2>/dev/null || true)" == "main" ]]; then
+      MACEFIELD_REPO="$candidate"
+      break
+    fi
+  done
+fi
+if [[ -z "${MACEFIELD_REPO:-}" || ! -f "$MACEFIELD_REPO/mace/modules/extensions.py" ]]; then
+  echo "Set MACEFIELD_REPO to a MACE-Field main-branch checkout." >&2
+  exit 1
+fi
 DATA="$TUTORIAL_ROOT/tutorials/macefield/data"
 PYTHON="${PYTHON:-python}"
 export MACEFIELD_REPO
 export PYTHONPATH="$MACEFIELD_REPO:$TUTORIAL_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
-OUT="${OUT_DIR:-$TUTORIAL_ROOT/tutorials/macefield/runs/bto_macefield_training}"
+OUT="${OUT_DIR:-$TUTORIAL_ROOT/tutorials/macefield/runs/bto_macefield_reference}"
 FORCES_WEIGHT="${FORCES_WEIGHT:-100}"
 COMPUTE_BECS="${COMPUTE_BECS:-False}"
 COMPUTE_POLARIZABILITY="${COMPUTE_POLARIZABILITY:-False}"
