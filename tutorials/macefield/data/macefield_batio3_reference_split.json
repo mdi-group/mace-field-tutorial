@@ -89,8 +89,8 @@
       0.0
     ]
   ],
-  "label_provenance_note": "Energy, forces, stress, and polarization are from zero-field Quantum ESPRESSO calculations. BECs are obtained from finite differences of forces with respect to small applied fields; polarizability is obtained from finite differences of polarization with respect to field, on the same fixed geometries. The processed field tag is zero and matches the zero-field mechanical labels.",
-  "coverage_note": "All labels are at the zero-field geometry; there are no reference labels for field reversal, switching paths, or wide-field extrapolation.",
+  "label_provenance_note": "Energy, forces, stress, and polarization are from zero-field Quantum ESPRESSO calculations. BECs are obtained from finite differences of forces with respect to applied fields, and polarizability from finite differences of polarization, using perturbations through ±0.36 V/Å on the same fixed geometries. The processed field tag is zero and matches the zero-field mechanical labels.",
+  "coverage_note": "Direct energy, force, stress, and polarization labels are at zero field; BEC and polarizability response labels use finite-field perturbations through ±0.36 V/Å. There are no field-cycled MD labels or labeled switching paths.",
   "copied_files": {
     "macefield_batio3_reference.extxyz": "ed51b4577ad6579e129f9e23f7f0d13c42f40ae7ae9a988a8f2f8a425eb7b9c0",
     "macefield_batio3_reference_train.extxyz": "bf087d186722a59bcb2ff4ac81f7216cd724f6b72bc0fbb2190d44294124e470",

@@ -4,15 +4,15 @@ The training lessons use small, reproducible subsets of the bundled QE response 
 
 ## BaTiO₃ QE response data
 
-`macefield_batio3_reference.extxyz` contains 59 periodic structures with 135 atoms each. Energy, forces, stress, and polarization are from zero-field calculations. BECs come from the change in force under a small applied field, and polarizability comes from the change in polarization under that field, all on the same fixed geometries. The field tag is therefore zero. The earlier copy tagged these zero-field labels with a nonzero field and has been replaced by the coherent zero-field version.
+`macefield_batio3_reference.extxyz` contains 59 periodic structures with 135 atoms each. Energy, forces, stress, and polarization are zero-field labels. BECs and polarizability are finite-field response labels on those same fixed geometries, with the BTO response-field range reaching ±0.36 V/Å. The stored `REF_electric_field` tag is zero because the direct energy, force, and polarization labels are evaluated at zero field; it does not encode the perturbation range used to form the response derivatives. The earlier copy tagged these zero-field labels with a nonzero field and has been replaced by the coherent zero-field version.
 
-The full file is split into 48 training and 11 validation frames for the foundation fine-tuning lesson. The combined BaTiO₃ notebook uses a smaller 12/4 subset selected evenly within those fixed splits. There is no independent test split. The BTO tutorial subset does not cover field reversal, switching paths, or a wide-field range, and it is not an AIMD dataset.
+The full file is split into 48 training and 11 validation frames for the foundation fine-tuning lesson. The combined BaTiO₃ notebook uses a smaller 12/4 subset selected evenly within those fixed splits. There is no independent test split. The BTO tutorial subset has response labels spanning the finite-field perturbation range, but it does not contain a field-cycled MD trajectory or a labeled switching path; it is not an AIMD dataset.
 
 ## α-quartz SiO₂ QE response data
 
 `sio2/SiO2-preprocessed.extxyz` contains 201 periodic, 72-atom structures with zero-field energy, forces, stress, and polarization labels plus BEC and electronic-susceptibility derivatives computed from small finite-field QE calculations on the same fixed geometries. It combines configurations from classical MD trajectories at 300 K and 600 K, followed by QE response calculations; it is not AIMD. Hessians are not stored labels and are calculated from the bundled model in the combined SiO₂ notebook.
 
-The combined SiO₂ notebook uses 24 training and 8 validation frames. Both temperatures occur in both splits. Validation frames are selected from later blocks of each source trajectory to reduce adjacent-frame leakage. The later dielectric, Hessian, and spectroscopy sections use the full data file and bundled specialist checkpoint; they do not depend on a model produced by the compact training demonstration.
+The combined SiO₂ notebook uses 24 training and 8 validation frames. Both temperatures occur in both splits. Validation frames are selected from later blocks of each source trajectory to reduce adjacent-frame leakage. The later dielectric, Hessian, and spectroscopy sections use the full data file and bundled specialist checkpoint; they do not depend on a model produced by the compact training demonstration. The 300 K spectroscopy run defaults to 10 ps on GPU; plotted spectra use 12 cm⁻¹ Gaussian display broadening, while the saved frequency arrays remain unbroadened.
 
 ## Reproducing the training subsets
 

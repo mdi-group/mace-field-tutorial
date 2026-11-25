@@ -7,15 +7,15 @@ Each lesson is independent and can be opened in Colab or run from a local clone.
 3. [SiO₂ training, dielectric response, Hessian, and 300 K spectra](02_sio2_workflow.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/02_sio2_workflow.ipynb)
 4. [Use and fine-tune MACEField-MH-1](03_foundation_finetuning.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mdi-group/mace-field-tutorial/blob/main/tutorials/macefield/03_foundation_finetuning.ipynb)
 
-Training cells stream per-epoch validation loss and available RMSEs; MD cells print each step and save a trajectory that is visualized in the notebook. Only `DeprecationWarning` and `FutureWarning` are filtered in the notebooks and their Python training subprocesses.
+Training cells stream per-epoch validation loss and available RMSEs; MD cells print each step and save a trajectory that is visualized in the notebook. Python warning output is suppressed in notebook cells and training subprocesses. Calculator cells filter the known MACE dtype-conversion notice, and ASE calls use the current `temperature_K` APIs.
 
 ## BaTiO₃ data and limitations
 
-The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. The bundled checkpoint supports the Ti-displacement example and an alternating-field MD sweep to ±0.36 V/Å. That range is 100 times the largest bundled response-label field (±0.0036 V/Å), so the P–E loop is an extrapolation stress test, not validated hysteresis or switching behavior.
+The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. Its BTO response labels reach ±0.36 V/Å. The bundled checkpoint supports Ti-displacement response and a two-cycle sinusoidal-field MD demonstration at 5 K and 300 K; the finite-rate, single-cell P–E loop is not a converged coercive-field measurement.
 
 ## α-quartz SiO₂ data and limitations
 
-The combined SiO₂ notebook trains on a deterministic 24/8 subset of the 201-frame, 72-atom QE response dataset. Configurations came from classical MD at 300 K and 600 K, not AIMD. Later dielectric and Hessian calculations use the bundled specialist checkpoint and full response data. The spectroscopy section runs fixed-cell, zero-field Langevin MD at 300 K; the default trajectory is 1 ps on GPU or 0.25 ps on CPU, so the spectra are exploratory and need convergence checks. Hessians are calculated from the model rather than read as dataset labels.
+The combined SiO₂ notebook trains on a deterministic 24/8 subset of the 201-frame, 72-atom QE response dataset. Configurations came from classical MD at 300 K and 600 K, not AIMD. Later dielectric and Hessian calculations use the bundled specialist checkpoint and full response data. The spectroscopy section runs fixed-cell, zero-field Langevin MD at 300 K for 10 ps on GPU or 2.5 ps on CPU by default. The longer trajectory gives finer frequency resolution; plotted spectra use 12 cm⁻¹ Gaussian broadening for readability, while raw spectral arrays are retained. These spectra remain exploratory and need convergence checks. Hessians are calculated from the model rather than read as dataset labels.
 
 ## Foundation model
 
