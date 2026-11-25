@@ -11,7 +11,7 @@ Training cells stream per-epoch validation loss and available RMSEs; MD cells pr
 
 ## BaTiO₃ data and limitations
 
-The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. Its BTO response labels reach ±0.36 V/Å. The bundled checkpoint supports Ti-displacement response and a two-cycle sinusoidal-field MD demonstration at 5 K and 300 K; the finite-rate, single-cell P–E loop is not a converged coercive-field measurement.
+The combined BTO notebook trains on a deterministic 12/4 subset of the 59-frame, 135-atom QE response dataset. The configurations are from Flare active learning, not AIMD. Its BTO response labels reach ±0.36 V/Å. The bundled checkpoint supports Ti-displacement response and a two-cycle sinusoidal-field MD demonstration at 5 K and 300 K thermostat targets. Strong-field work can raise the instantaneous temperature; inspect the plotted trace. The finite-rate, single-cell P–E loop is not a converged coercive-field measurement.
 
 ## α-quartz SiO₂ data and limitations
 
